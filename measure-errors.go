@@ -1,15 +1,19 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"syscall"
 	"time"
 )
 
 const GB = 1 << 30
-const allocationSize = 8 * GB
+
+var allocationInGB = flag.Uint("size", 2, "allocation size in GB")
 
 func main() {
+	flag.Parse()
+	allocationSize := *allocationInGB * GB
 	memory := make([]byte, allocationSize)
 
 	// mlock prevents memory from being swapped to disk
